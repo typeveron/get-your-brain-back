@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game - Get Your Brain Back</title>
+    <link rel="stylesheet" href="bootstrap.css" />
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <link rel="stylesheet" href="Site.css" />
+</head>
+<body onload="setDefaultSettings();">
+    <h2 class="text-center">Dual <span id="header-n">2</span>-back</h2>
+    <div id="home-div" class="text-center">
+        <div id="result" hidden>
+            <h3>Your Result:</h3>
+            <p></p>
+        </div>
+		<!-- Changed the name of the div below. No errors yet but watch out for hidden effects.-->
+        <div id="start-button" class="btn btn-menu" onclick="runGame();"><span class="menu-text">Start Game</span></div>
+        <div id="instructions-button" class="btn btn-menu" onclick="toggleInstructions();">
+            <span class="menu-text">How to Play</span>
+	        <p id="instructions" hidden>The game aims to improve your memory.<br/>
+            There are 2 signals which you must remember. They are the position of the light and the letter pronounced.<br/>
+        	In a game of 2-back, you must press the  position matching button ("a" on the keyboard by default)<br/>
+        	if the position in the current round is the same as 2 rounds ago.<br/>
+        	Press the audio matching button ("l") if the letter you heard in this round is the same as 2 rounds ago.<br/>
+        	In a game of 3-back, press the matching button if the signal is the same as 3 rounds ago, and so on.<br/>
+        	This may be disorienting at first, but if you keep trying, you will succeed and your memory will improve.<br/>
+			Click again to hide the instructions</p>
+		</div>
+		<div id="settings-button" class="btn btn-menu" onclick="showSettings();">
+			<span class="menu-text">Settings</span>
+			<table id="settings-table" hidden>
+				<tr>
+					<td>n-back</td>
+					<td>
+						<select id="n-back" name="n-back" onchange="changeSetting(this);">
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Rounds</td>
+					<td>
+						<select id="rounds" name="rounds" onchange="changeSetting(this);">
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+							<option value="25">25</option>
+							<option value="30">30</option>
+						</select><span id="setting-added-n">+2</span>
+					</td>
+				</tr>
+				<tr>
+					<td>Round duration</td>
+					<td>
+						<select id="round-duration" name="round-duration" onchange="changeSetting(this);">
+							<option value="1000">1</option>
+							<option value="1500">1.5</option>
+							<option value="2000">2</option>
+							<option value="2500">2.5</option>
+							<option value="3000">3</option>
+						</select>sec
+					</td>
+				</tr>
+			</table>
+			<button id="hide-settings-button" class="" onclick="hideSettings();event.cancelBubble=true;" hidden>Hide settings</button>
+		</div>
+		<div id="about-button" class="btn btn-menu"><span class="menu-text">About</span></div>
+	</div>
+    <div id="game-div" hidden>
+        <p id="remaining">Remaining: <span></span></p>
+        <div id="game-table" class="container-fluid">
+            <div class="row">
+                <div class="col-xs-4">
+                    <div id="position-1" class="position">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div id="position-2" class="position">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div id="position-3" class="position">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div id="position-4" class="position">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div id="position-5" class="position">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div id="position-6" class="position">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div id="position-7" class="position">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div id="position-8" class="position">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div id="position-9" class="position">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p id="position-match">Position Match: A</p>
+        <p id="audio-match">Audio Match: L</p>
+    </div>
+    <div class="container">
+        <hr />
+        <footer>
+            <p>Lucian Condrea, no rights reserved.</p>
+        </footer>
+    </div>
+    <script src="jquery-1.10.2.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="mechanics.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>
