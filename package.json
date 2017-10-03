@@ -1,0 +1,27 @@
+{
+  "name": "get-your-brain-back",
+  "version": "1.0.0",
+  "description": "A memory game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucian95/get-your-brain-back.git"
+  },
+  "keywords": [
+    "memory",
+    "game",
+    "n-back"
+  ],
+  "author": "Lucian Condrea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucian95/get-your-brain-back/issues"
+  },
+  "homepage": "https://github.com/lucian95/get-your-brain-back#readme",
+  "dependencies": {
+    "express": "^4.16.1"
+  }
+}
