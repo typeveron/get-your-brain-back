@@ -7,7 +7,7 @@ game.stimuli = { "position": "", "audio": ""};
 game.responses = { "position": false, "audio": false};
 game.matchChance = 0.25;
 game.roundDisplayDuration = 2000;
-game.roundTotalDuration = game.roundDisplayDuration + 1500;
+game.roundTotalDuration = game.roundDisplayDuration + 300;
 game.n = 2;
 game.maxRounds = 10 + game.n;
 
