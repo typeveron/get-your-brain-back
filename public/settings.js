@@ -47,3 +47,32 @@ function changeSetting (setting) {
 		
 	}
 }
+
+// TODO: Make game fit the whole screen. Remove footer when in game.
+// make the match 'buttons' reasonably sized and placed.
+
+//function setGameHeight() {
+//	var height = window.innerHeight;
+//	
+//	
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

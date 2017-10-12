@@ -1,5 +1,19 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
-    padding-bottom: 20px;
+	padding-top: 30px;
+    padding-bottom: 50px;
+    position: relative;
+    min-height: 100%;
     background-color: #a0a0a0;
 }
 
@@ -28,6 +42,14 @@ input[type="select"] {
 
 hr{
     clear: both;
+    margin-top: 0;
+    margin-bottom: 15px;
+    width: 85%;
+}
+
+h2{
+	margin: 0;
+	padding-bottom: 30px;
 }
 
 tr{
@@ -40,6 +62,15 @@ tr td:last-child{
 
 strong{
     text-transform: capitalize;
+}
+
+footer{
+	position: absolute;
+	height: 50px;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center;
 }
 
 .position{
@@ -106,10 +137,12 @@ strong{
 
 #position-match{
     float: left;
+    font-size: 1.5em;
 }
 
 #audio-match{
     float: right;
+    font-size: 1.5em;
 }
 
 /* Responsive: Portrait tablets and up */

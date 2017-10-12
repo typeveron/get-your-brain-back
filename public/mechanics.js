@@ -147,7 +147,7 @@ self.displayPosition = function () {
 
 self.playAudio = function () {
     // TODO: Ajust audo volume.
-    audio = new Audio("Audio/audio-" +
+    audio = new Audio("audio/audio-" +
         game.challenges[game.challenges.length - 1].audio + ".wav");
     audio.play();
 }
