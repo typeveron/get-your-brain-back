@@ -1,6 +1,20 @@
 ﻿var self = this;
 var loopTimeout;
-var audio;
+
+// I know it's terrible practice I just want to see if it works for now.
+
+var audio = [
+    new Audio('audio/audio-1.wav'),
+    new Audio('audio/audio-2.wav'),
+    new Audio('audio/audio-3.wav'),
+    new Audio('audio/audio-4.wav'),
+    new Audio('audio/audio-5.wav'),
+    new Audio('audio/audio-6.wav'),
+    new Audio('audio/audio-7.wav'),
+    new Audio('audio/audio-8.wav'),
+    new Audio('audio/audio-9.wav')
+];
+
 var game = {};
 // Settings are stored here as constants.
 game.stimuli = { "position": "", "audio": ""};
@@ -11,7 +25,7 @@ game.roundTotalDuration = game.roundDisplayDuration + 300;
 game.n = 2;
 game.maxRounds = 10 + game.n;
 
-// TODO: 
+// TODO:
 // Make the game fit the screen on any device.
 // Make the settings more beautiful.
 // Add about section.
@@ -21,6 +35,7 @@ game.maxRounds = 10 + game.n;
 // CLEAN UP THE CODE!!!
 // Fix the esc issue in chrome.
 // Find better fonts and/or sizes.
+// Ajust audio volume.
 // Make the position and audio stop completely when the user stops the game so that they can restart immediately.
 
 self.showGame = function () {
@@ -35,14 +50,15 @@ self.hideGame = function () {
 }
 
 self.cancelGame = function () {
-    self.endGame();            
+    self.endGame();
     $("#home-div").show();
     $("#game-div").hide();
     clearTimeout(loopTimeout);
-    audio.pause();
+    var currentAudio = game.challenges[game.challenges.length - 1].audio;
+    audio[currentAudio].pause();
     var selector = "#position-" + game.challenges[game.challenges.length - 1]["position"];
     $(selector).removeClass("active-position");
-}            
+}
 
 // Game-specific values stored here then deleted
 // after each game.
@@ -123,10 +139,11 @@ self.verifyMatch = function () {
 
 // Calls each stimulus displayer function one after the other.
 self.displayChallenge = function () {
-    if (game.stimuli.hasOwnProperty("position"))
-        self.displayPosition();
-    if (game.stimuli.hasOwnProperty("audio"))
-        self.playAudio();
+    var currentPosition = game.challenges[game.challenges.length - 1].position;
+    var currentAudio = game.challenges[game.challenges.length - 1].audio;
+
+    self.displayPosition(currentPosition);
+    self.playAudio(currentAudio);
 
     setTimeout(self.resetFeedback, game.roundDisplayDuration);
     setTimeout(self.checkMissed, game.roundDisplayDuration);
@@ -137,19 +154,16 @@ self.displayChallenge = function () {
          }}, game.roundDisplayDuration);
 };
 
-self.displayPosition = function () {
-    var selector = "#position-" + game.challenges[game.challenges.length - 1]["position"];
+self.displayPosition = function (currentPosition) {
+    var selector = "#position-" + currentPosition;
     $(selector).addClass("active-position");
     setTimeout(function () {
         $(selector).removeClass("active-position");
     }, game.roundDisplayDuration);
 }
 
-self.playAudio = function () {
-    // TODO: Ajust audo volume.
-    audio = new Audio("audio/audio-" +
-        game.challenges[game.challenges.length - 1].audio + ".wav");
-    audio.play();
+self.playAudio = function (currentAudio) {
+    audio[currentAudio].play();
 }
 // Applies a feedback class to the stimulus selector based on the response.
 
