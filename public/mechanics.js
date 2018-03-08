@@ -1,20 +1,6 @@
-﻿var self = this;
+var self = this;
 var loopTimeout;
-
-// I know it's terrible practice I just want to see if it works for now.
-
-var audio = [
-    new Audio('audio/audio-1.wav'),
-    new Audio('audio/audio-2.wav'),
-    new Audio('audio/audio-3.wav'),
-    new Audio('audio/audio-4.wav'),
-    new Audio('audio/audio-5.wav'),
-    new Audio('audio/audio-6.wav'),
-    new Audio('audio/audio-7.wav'),
-    new Audio('audio/audio-8.wav'),
-    new Audio('audio/audio-9.wav')
-];
-
+var audio;
 var game = {};
 // Settings are stored here as constants.
 game.stimuli = { "position": "", "audio": ""};
@@ -151,7 +137,8 @@ self.displayChallenge = function () {
         document.onkeypress = function(key){
             if(key.key == "Escape")
                 self.cancelGame();
-         }}, game.roundDisplayDuration);
+        };
+    }, game.roundDisplayDuration);
 };
 
 self.displayPosition = function (currentPosition) {
@@ -169,12 +156,15 @@ self.playAudio = function (currentAudio) {
 
 self.displayFeedback = function(stimulus) {
     var selector = "#" + stimulus + "-match";
-    if (game.responses[stimulus] && game.currentRoundMatch[stimulus])
+    if (game.responses[stimulus] && game.currentRoundMatch[stimulus]){
         $(selector).addClass("feedback-true");
-    else if (!game.responses[stimulus] &&
-        game.currentRoundMatch[stimulus])
+    }
+    else if (!game.responses[stimulus] && game.currentRoundMatch[stimulus]) {
         $(selector).addClass("feedback-missed");
-    else $(selector).addClass("feedback-false");
+    }
+    else {
+        $(selector).addClass("feedback-false");
+    }
 }
 
 // Removes all feedback classes from all selectors.
@@ -260,3 +250,19 @@ var runGame = function () {
     //Runs the game
     loopRound();
 };
+
+
+// Load audio last to prevent loading from blocking the UI.
+// Now whole page only loads after audio is fully loaded.
+// Would ideally load concurrently to maximize convenience.
+audio = [
+    new Audio('audio/audio-1.wav'),
+    new Audio('audio/audio-2.wav'),
+    new Audio('audio/audio-3.wav'),
+    new Audio('audio/audio-4.wav'),
+    new Audio('audio/audio-5.wav'),
+    new Audio('audio/audio-6.wav'),
+    new Audio('audio/audio-7.wav'),
+    new Audio('audio/audio-8.wav'),
+    new Audio('audio/audio-9.wav')
+];
