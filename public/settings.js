@@ -16,9 +16,12 @@
         let roundSetting = localStorage.getItem('rounds-setting');
         let durationSetting = localStorage.getItem('round-duration-setting');
 
+        // Adjust all visual elements to match stored settings
         document.getElementById('n-setting').value = nSetting;
         document.getElementById('rounds-setting').value = roundSetting;
         document.getElementById('round-duration-setting').value = durationSetting;
+        document.getElementById('setting-added-n').innerText = '+' + nSetting;
+        document.getElementById('header-n').innerText = nSetting;
     }
 
     document.getElementById('instructions-button').onclick = function toggleInstructions() {

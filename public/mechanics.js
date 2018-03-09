@@ -7,27 +7,32 @@
     game.stimuli = { "position": "", "audio": ""};
     game.responses = { "position": false, "audio": false};
     game.matchChance = 0.25;
-    game.roundDisplayDuration = 2000;
-    game.roundTotalDuration = game.roundDisplayDuration + 300;
-    game.n = 2;
-    game.maxRounds = 10 + game.n;
 
-    // TODO:
-    // Make the game fit the screen on any device.
-    // Make the settings more beautiful.
-    // Add about section.
-    // Make the instructions fit the box.
-    // Add menu/game and game/menu transition animations.
-    // Add cosmetic improvements to the menu and game screen.
-    // CLEAN UP THE CODE!!!
-    // Fix the esc issue in chrome.
-    // Find better fonts and/or sizes.
-    // Make the position and audio stop completely when the user stops the game so that they can restart immediately.
+    document.getElementById('start-button').onclick = function runGame() {
+        initializeGame();
+        showGame();
+
+        //Runs the game
+        loopRound();
+    };
+
+    let initializeGame = function() {
+        game.challenges = new Array();
+        game.currentRound = 1;
+
+        // Reset every game because localStorage does not fire storage event
+        game.n = Number(localStorage.getItem('n-setting'));
+        game.maxRounds = Number(localStorage.getItem('rounds-setting')) + game.n;
+        game.roundDisplayDuration = Number(localStorage.getItem('round-duration-setting'));
+        game.roundTotalDuration = game.roundDisplayDuration + 300;
+        console.log(game);
+        resetScore();
+    };
 
     let showGame = function() {
         $("#game-div").show();
         $("#home-div").hide();
-    }
+    };
 
     let hideGame = function() {
         $("#home-div").show();
@@ -47,11 +52,6 @@
 
     // Game-specific values stored here then deleted
     // after each game.
-    let initializeGame = function() {
-        game.challenges = new Array();
-        game.currentRound = 1;
-        resetScore();
-    }
 
     let endGame = function() {
         delete game.challenges;
@@ -218,7 +218,7 @@
         }
     }
 
-    function loopRound() {
+    let loopRound = function() {
         resetFeedback();
         generateChallenges();
         if (game.challenges.length === game.n + 1)
@@ -240,12 +240,5 @@
         }
     };
 
-    document.getElementById('start-button').onclick = function() {
-        initializeGame();
-        showGame();
-
-        //Runs the game
-        loopRound();
-    };
 
 })(window)
