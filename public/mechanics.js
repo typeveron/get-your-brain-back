@@ -1,6 +1,5 @@
 (function(window) {
 
-    ﻿var self = this;
     var loopTimeout;
     var audio;
     var game = {};
@@ -25,19 +24,19 @@
     // Find better fonts and/or sizes.
     // Make the position and audio stop completely when the user stops the game so that they can restart immediately.
 
-    self.showGame = function () {
+    let showGame = function() {
         $("#game-div").show();
         $("#home-div").hide();
     }
 
-    self.hideGame = function () {
+    let hideGame = function() {
         $("#home-div").show();
         $("#game-div").hide();
-        self.showResult();
+        showResult();
     }
 
-    self.cancelGame = function () {
-        self.endGame();
+    let cancelGame = function() {
+        endGame();
         $("#home-div").show();
         $("#game-div").hide();
         clearTimeout(loopTimeout);
@@ -48,19 +47,19 @@
 
     // Game-specific values stored here then deleted
     // after each game.
-    self.initializeGame = function () {
+    let initializeGame = function() {
         game.challenges = new Array();
         game.currentRound = 1;
-        self.resetScore();
+        resetScore();
     }
 
-    self.endGame = function () {
+    let endGame = function() {
         delete game.challenges;
         delete game.currentRound;
         delete game.currentRoundMatch;
     }
 
-    self.resetScore = function () {
+    let resetScore = function() {
         game.currentScore = { };
         for (var stimulus in game.stimuli) {
             if (game.stimuli.hasOwnProperty(stimulus)) {
@@ -72,7 +71,7 @@
         }
     }
 
-    self.showResult = function () {
+    let showResult = function() {
         $("#result").show();
         $("#result p").html("(Correct-Mistakes)<br/>");
         var correct = 0, total = 0;
@@ -86,7 +85,7 @@
         $("#result p").append("<strong>Total: </strong>" + Math.round(100 * correct / total) + "%");
     }
 
-    function getRandomArbitrary(min, max, stimulus) {
+    let getRandomArbitrary = function(min, max, stimulus) {
         if (game.challenges.length >= game.n + 1) {
             if (Math.random() < game.matchChance) {
                 return game.challenges[1][stimulus];
@@ -98,7 +97,7 @@
     // Creates challenge object and pushes it to
     // the game.challenges array.
 
-    self.generateChallenges = function () {
+    let generateChallenges = function() {
         var challenge = {};
         for (var stimulus in game.stimuli) {
             if (game.stimuli.hasOwnProperty(stimulus))
@@ -114,7 +113,7 @@
     // challenges and stores the boolean for each stimulus
     // in game.currentRoundMatch.
 
-    self.verifyMatch = function () {
+    let verifyMatch = function() {
         game.currentRoundMatch = {};
         for (var stimulus in game.stimuli) {
             if (game.stimuli.hasOwnProperty(stimulus))
@@ -124,30 +123,30 @@
     };
 
     // Calls each stimulus displayer function one after the other.
-    self.displayChallenge = function () {
+    let displayChallenge = function() {
         if (game.stimuli.hasOwnProperty("position"))
-            self.displayPosition();
+            displayPosition();
         if (game.stimuli.hasOwnProperty("audio"))
-            self.playAudio();
+            playAudio();
 
-        setTimeout(self.resetFeedback, game.roundDisplayDuration);
-        setTimeout(self.checkMissed, game.roundDisplayDuration);
+        setTimeout(resetFeedback, game.roundDisplayDuration);
+        setTimeout(checkMissed, game.roundDisplayDuration);
         setTimeout(function(){
             document.onkeypress = function(key){
                 if(key.key == "Escape")
-                    self.cancelGame();
+                    cancelGame();
              }}, game.roundDisplayDuration);
     };
 
-    self.displayPosition = function () {
+    let displayPosition = function() {
         var selector = "#position-" + game.challenges[game.challenges.length - 1]["position"];
         $(selector).addClass("active-position");
-        setTimeout(function () {
+        setTimeout(function() {
             $(selector).removeClass("active-position");
         }, game.roundDisplayDuration);
     }
 
-    self.playAudio = function () {
+    let playAudio = function() {
         // TODO: Ajust audo volume.
         audio = new Audio("audio/audio-" +
             game.challenges[game.challenges.length - 1].audio + ".wav");
@@ -155,7 +154,7 @@
     }
     // Applies a feedback class to the stimulus selector based on the response.
 
-    self.displayFeedback = function(stimulus) {
+    let displayFeedback = function(stimulus) {
         var selector = "#" + stimulus + "-match";
         if (game.responses[stimulus] && game.currentRoundMatch[stimulus])
             $(selector).addClass("feedback-true");
@@ -166,14 +165,14 @@
     }
 
     // Removes all feedback classes from all selectors.
-    self.resetFeedback = function () {
+    let resetFeedback = function() {
         for (var stimulus in game.stimuli) {
             var selector = "#" + stimulus + "-match";
             $(selector).removeClass("feedback-true feedback-false feedback-missed");
         }
     }
 
-    self.getResponse = function (key) {
+    let getResponse = function(key) {
         // Wires the keypress event to change the
         // stimuli response status and immediately
         // displays feedback.
@@ -181,25 +180,25 @@
             case 'l':
                 stimulus = 'audio';
                 game.responses['audio'] = true;
-                self.calculateScore(stimulus);
+                calculateScore(stimulus);
                 break;
             case 'a':
                 stimulus = 'position';
                 game.responses['position'] = true;
-                self.calculateScore(stimulus);
+                calculateScore(stimulus);
                 break;
             case "Escape":
-                self.cancelGame();
+                cancelGame();
                 break;
         }
     };
 
-    self.resetResponses = function () {
+    let resetResponses = function() {
         for (var stimulus in game.stimuli )
             game.responses[stimulus] = false;
     }
 
-    self.calculateScore = function (stimulus) {
+    let calculateScore = function(stimulus) {
         displayFeedback(stimulus);
         if (game.currentRoundMatch[stimulus] !== game.responses[stimulus]) {
             game.currentScore[stimulus].mistake += 1;
@@ -210,23 +209,23 @@
         }
     };
 
-    self.checkMissed = function () {
+    let checkMissed = function() {
         for (var stimulus in game.stimuli) {
             if (!game.responses[stimulus] && game.currentRoundMatch[stimulus]) {
                 game.currentScore[stimulus].mistake += 1;
-                self.displayFeedback(stimulus);
+                displayFeedback(stimulus);
             }
         }
     }
 
     function loopRound() {
-        self.resetFeedback();
-        self.generateChallenges();
+        resetFeedback();
+        generateChallenges();
         if (game.challenges.length === game.n + 1)
             verifyMatch();
-        self.resetResponses();
-        self.displayChallenge();
-        document.onkeypress = self.getResponse;
+        resetResponses();
+        displayChallenge();
+        document.onkeypress = getResponse;
 
         document.getElementById("remaining").lastChild.textContent =
             game.maxRounds - game.currentRound + 1;
@@ -234,16 +233,16 @@
         if (game.currentRound <= game.maxRounds) {
             loopTimeout = setTimeout(loopRound, game.roundTotalDuration);
         } else {
-            loopTimeout = setTimeout(function () {
-                self.endGame();
-                self.hideGame();
+            loopTimeout = setTimeout(function() {
+                endGame();
+                hideGame();
             }, game.roundTotalDuration);
         }
     };
 
-    document.getElementById('start-button').onclick = function () {
-        self.initializeGame();
-        self.showGame();
+    document.getElementById('start-button').onclick = function() {
+        initializeGame();
+        showGame();
 
         //Runs the game
         loopRound();
