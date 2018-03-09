@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="frameworks/bootstrap.min.css" />
     <link rel="stylesheet" href="Site.css" />
 </head>
-<body onload="setDefaultSettings();">
+<body>
     <h2 class="text-center">Dual <span id="header-n">2</span>-back</h2>
     <div id="home-div" class="text-center">
         <div id="result" hidden>
@@ -17,8 +17,8 @@
             <p></p>
         </div>
 		<!-- Changed the name of the div below. No errors yet but watch out for hidden effects.-->
-        <div id="start-button" class="btn btn-menu" onclick="runGame();"><span class="menu-text">Start Game</span></div>
-        <div id="instructions-button" class="btn btn-menu" onclick="toggleInstructions();">
+        <div id="start-button" class="btn btn-menu"><span class="menu-text">Start Game</span></div>
+        <div id="instructions-button" class="btn btn-menu">
             <span class="menu-text">How to Play</span>
 	        <p id="instructions" hidden>The game aims to improve your memory.<br/>
             There are 2 signals which you must remember. They are the position of the light and the letter pronounced.<br/>
@@ -29,13 +29,13 @@
         	This may be disorienting at first, but if you keep trying, you will succeed and your memory will improve.<br/>
 			Click again to hide the instructions</p>
 		</div>
-		<div id="settings-button" class="btn btn-menu" onclick="showSettings();">
+		<div id="settings-button" class="btn btn-menu">
 			<span class="menu-text">Settings</span>
 			<table id="settings-table" hidden>
 				<tr>
 					<td>n-back</td>
 					<td>
-						<select id="n-back" name="n-back" onchange="changeSetting(this);">
+						<select id="n-setting" name="n">
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
@@ -51,7 +51,7 @@
 				<tr>
 					<td>Rounds</td>
 					<td>
-						<select id="rounds" name="rounds" onchange="changeSetting(this);">
+						<select id="rounds-setting" name="rounds">
 							<option value="10">10</option>
 							<option value="15">15</option>
 							<option value="20">20</option>
@@ -63,7 +63,7 @@
 				<tr>
 					<td>Round duration</td>
 					<td>
-						<select id="round-duration" name="round-duration" onchange="changeSetting(this);">
+						<select id="round-duration-setting" name="round-duration">
 							<option value="1000">1</option>
 							<option value="1500">1.5</option>
 							<option value="2000">2</option>
@@ -73,7 +73,7 @@
 					</td>
 				</tr>
 			</table>
-			<button id="hide-settings-button" class="" onclick="hideSettings();event.cancelBubble=true;" hidden>Hide settings</button>
+			<button id="hide-settings-button" class="" hidden>Hide settings</button>
 		</div>
 		<div id="about-button" class="btn btn-menu"><span class="menu-text">About</span></div>
 	</div>
@@ -134,7 +134,7 @@
     </div>
     <script src="frameworks/jquery-1.10.2.js"></script>
     <script src="frameworks/bootstrap.js"></script>
-    <script src="mechanics.js"></script>
     <script src="settings.js"></script>
+    <script src="mechanics.js"></script>
 </body>
 </html>
