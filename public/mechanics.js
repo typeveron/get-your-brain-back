@@ -152,6 +152,7 @@
             game.challenges[game.challenges.length - 1].audio + ".wav");
         audio.play();
     }
+
     // Applies a feedback class to the stimulus selector based on the response.
 
     let displayFeedback = function(stimulus) {
@@ -240,5 +241,18 @@
         }
     };
 
-
+    // Load audio last to prevent loading from blocking the UI.
+    // Now whole page only loads after audio is fully loaded.
+    // Would ideally load concurrently to maximize convenience.
+    audio = [
+        new Audio('audio/audio-1.wav'),
+        new Audio('audio/audio-2.wav'),
+        new Audio('audio/audio-3.wav'),
+        new Audio('audio/audio-4.wav'),
+        new Audio('audio/audio-5.wav'),
+        new Audio('audio/audio-6.wav'),
+        new Audio('audio/audio-7.wav'),
+        new Audio('audio/audio-8.wav'),
+        new Audio('audio/audio-9.wav')
+    ];
 })(window)
